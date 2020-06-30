@@ -37,6 +37,7 @@
       .panels {
         min-height: 100vh;
         overflow: hidden;
+        display: flex;
       }
 
       .panel {
@@ -52,6 +53,11 @@
         font-size: 20px;
         background-size: cover;
         background-position: center;
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
       }
 
       .panel1 {
@@ -88,8 +94,25 @@
         font-size: 4em;
       }
 
+      .panel > *:last-child {
+        transform: translateY(100vh);
+      }
+
+      .panel > *:first-child {
+        transform: translateY(-100vh);
+      }
+
+      .panel.active > *:last-child {
+        transform: translateY(0);
+      }
+
+      .panel.active > *:first-child {
+        transform: translateY(0);
+      }
+
       .panel.open {
         font-size: 40px;
+        flex: 5;
       }
     </style>
 
@@ -121,6 +144,31 @@
       </div>
     </div>
 
-    <script></script>
+    <script>
+      function handleOpen() {
+        clearOpen(this);
+        this.classList.toggle('open');
+      }
+
+      function clearOpen(current) {
+        panels.forEach((panel) => {
+          if (panel != current) {
+            panel.classList.remove('open');
+          }
+        });
+      }
+
+      function handleActive(e) {
+        if (event.propertyName.includes('flex')) {
+          this.classList.toggle('active');
+        }
+      }
+
+      const panels = document.querySelectorAll('.panel');
+      panels.forEach((panel) => panel.addEventListener('click', handleOpen));
+      panels.forEach((panel) =>
+        panel.addEventListener('transitionend', handleActive)
+      );
+    </script>
   </body>
 </html>
