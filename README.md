@@ -1,4 +1,5 @@
-FlexGallery
+# FlexGallery
+
 In this project i made a really cool gallery using JS events
 
 Fast Review
